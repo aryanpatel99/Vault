@@ -128,7 +128,21 @@ app.delete("/api/v1/content/:id", authMiddleware,async(req, res) => {
 app.post("/api/v1/brain/share", authMiddleware,async (req, res) => {
     try {
         const userId = (req as any).user.userId;
+        const isEnabled = req.body.isEnabled
+        
+        if(typeof isEnabled !== "boolean"){
+            return res.status(400).json({message:"isEnabled must be a boolean"})
+        }
+        
         const existing = await LinkModel.findOne({userId})
+        if(isEnabled === false){
+            if(existing){
+                await LinkModel.deleteOne({userId})
+                return res.status(200).json({message:"Share disabled"})
+            } else {
+                return res.status(200).json({message:"Already disabled"})
+            }
+        }
 
         if(existing){
             return res.status(200).json({shareLink:existing.hash})
@@ -141,9 +155,9 @@ app.post("/api/v1/brain/share", authMiddleware,async (req, res) => {
             hash
         })
 
-        return res.status(201).json({shareLink:hash})
+        return res.status(201).json({enabled:true, shareLink:hash})
     } catch (error) {
-        return res.status(500).json({message:"Error generating share link", error})
+        return res.status(500).json({message:"Internal Server Error"})
     }
 
 });
