@@ -4,7 +4,7 @@ const PublicSharedVault: React.FC = () => {
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col">
       {/* TopAppBar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0e0e0e] border-b border-[#484848]/15 flex items-center justify-center w-full h-16 px-6 max-w-none">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0e0e0e] border-b border-outline-variant/15 flex items-center justify-center w-full h-16 px-6 max-w-none">
         <div className="flex items-center gap-3">
           <span className="material-symbols-outlined text-[#a3a6ff]">api</span>
           <h1 className="font-headline tracking-tight font-bold text-lg text-[#a3a6ff] m-0">Digital Monolith Public Vault</h1>
@@ -12,7 +12,7 @@ const PublicSharedVault: React.FC = () => {
       </header>
 
       {/* Content Canvas */}
-      <main className="flex-grow pt-32 pb-20 px-6 max-w-4xl mx-auto w-full">
+      <main className="grow pt-32 pb-20 px-6 max-w-4xl mx-auto w-full">
         {/* Header Section */}
         <section className="mb-20 text-left">
           <div className="flex flex-col gap-2">

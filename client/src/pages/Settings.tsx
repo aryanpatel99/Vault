@@ -6,11 +6,11 @@ const Settings: React.FC = () => {
       {/* TopAppBar */}
       <nav className="fixed top-0 w-full z-50 bg-[#0e0e0e] border-b border-outline-variant/15 flex items-center justify-between px-6 h-16">
         <div className="flex items-center gap-4">
-          <span className="material-symbols-outlined text-[#ababab] hover:bg-[#2c2c2c] transition-colors duration-150 p-2 rounded cursor-pointer">menu</span>
+          <span className="material-symbols-outlined text-on-surface-variant hover:bg-surface-bright transition-colors duration-150 p-2 rounded cursor-pointer">menu</span>
           <span className="font-headline font-bold tracking-tighter uppercase text-2xl text-white">VAULT</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#ababab] hover:bg-[#2c2c2c] transition-colors duration-150 p-2 rounded cursor-pointer">search</span>
+          <span className="material-symbols-outlined text-on-surface-variant hover:bg-surface-bright transition-colors duration-150 p-2 rounded cursor-pointer">search</span>
         </div>
       </nav>
 
@@ -29,7 +29,7 @@ const Settings: React.FC = () => {
               <h2 className="font-headline text-lg font-bold m-0">Public Brain</h2>
               <p className="text-xs text-on-surface-variant m-0">Publish your curated thoughts to the web.</p>
             </div>
-            <button aria-checked="true" className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-primary" role="switch">
+            <button aria-checked="true" className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-primary" role="switch">
               <span aria-hidden="true" className="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-primary shadow ring-0 transition duration-200 ease-in-out"></span>
             </button>
           </div>
@@ -123,16 +123,16 @@ const Settings: React.FC = () => {
       </main>
 
       {/* BottomNavBar */}
-      <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center pb-safe bg-[#131313] border-t border-outline-variant/15 z-50 h-20">
-        <div className="flex flex-col items-center justify-center text-[#ababab] hover:text-white transition-all cursor-pointer">
+      <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center pb-safe bg-surface-container-low border-t border-outline-variant/15 z-50 h-20">
+        <div className="flex flex-col items-center justify-center text-on-surface-variant hover:text-white transition-all cursor-pointer">
           <span className="material-symbols-outlined pb-1">database</span>
           <span className="font-label text-[10px] font-medium tracking-wide">Vault</span>
         </div>
-        <div className="flex flex-col items-center justify-center text-[#ababab] hover:text-white transition-all cursor-pointer">
+        <div className="flex flex-col items-center justify-center text-on-surface-variant hover:text-white transition-all cursor-pointer">
           <span className="material-symbols-outlined pb-1">tactic</span>
           <span className="font-label text-[10px] font-medium tracking-wide">Draw</span>
         </div>
-        <div className="flex flex-col items-center justify-center text-[#ababab] hover:text-white transition-all cursor-pointer">
+        <div className="flex flex-col items-center justify-center text-on-surface-variant hover:text-white transition-all cursor-pointer">
           <span className="material-symbols-outlined pb-1">share_reviews</span>
           <span className="font-label text-[10px] font-medium tracking-wide">Public</span>
         </div>

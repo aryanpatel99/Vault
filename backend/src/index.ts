@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { connectDB, ContentModel, LinkModel, UserModel } from "./db.js";
 import bycrpt from "bcrypt";
-import zod, { z } from "zod";
+import  { z } from "zod";
 import { authMiddleware } from "./middleware.js";
 import cors from "cors";
 import crypto from "crypto";

@@ -1,13 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddIcon, LockIcon, SearchIcon } from '../lib/icons';
+import { useNavigate } from 'react-router-dom';
+
+type Content = {
+  userId: string,
+  title: string,
+  link: string,
+  tags: string[],
+}
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const [content, setContent] = useState<Content[]>([]);
+  const getContent = async () => {
+    const baseUrl = import.meta.env.VITE_API_URl;
+    const endpoint = "/api/v1/content";
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+    }
+
+    const response = await fetch(baseUrl + endpoint, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
+    const data = await response.json();
+    setContent(data);
+    console.log("CONTENT: ", data)
+
+  }
+
+  useEffect(() => {
+    getContent();
+  }, [])
+
+
   return (
     <div className="bg-background text-on-background min-h-screen">
       {/* TopAppBar */}
       <header className="fixed top-0 z-50 flex items-center justify-between px-6 h-16 w-full bg-surface-container-low">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-primary"><LockIcon/></span>
+          <span className="material-symbols-outlined text-primary"><LockIcon /></span>
           <h1 className="font-headline tracking-[0.2em] font-black text-white text-xl uppercase m-0">VAULT</h1>
         </div>
         <div className="flex items-center gap-6">
@@ -37,11 +74,11 @@ const Dashboard: React.FC = () => {
         {/* Search & Filter Bar */}
         <div className="flex items-center justify-between mb-8 border-b border-outline-variant/15 pb-4">
           <div className="flex items-center gap-4 text-on-surface-variant">
-            <span className="material-symbols-outlined text-sm"><SearchIcon/></span>
-            <input 
-              className="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder:text-outline outline-none" 
-              placeholder="Search the vault..." 
-              type="text" 
+            <span className="material-symbols-outlined text-sm"><SearchIcon /></span>
+            <input
+              className="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder:text-outline outline-none"
+              placeholder="Search the vault..."
+              type="text"
             />
           </div>
           <div className="flex gap-4">
@@ -55,10 +92,10 @@ const Dashboard: React.FC = () => {
           {/* Hero Card */}
           <div className="md:col-span-8 group cursor-pointer bg-surface-container-low p-8 rounded-sm hover:bg-surface-container-high transition-all duration-300 relative overflow-hidden h-[300px] flex flex-col justify-end">
             <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
-              <img 
-                alt="Abstract texture" 
-                className="w-full h-full object-cover grayscale" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF2GkqMRbHMcsrWB86TiBHdZDOsJOqKoQajmyOZSdf3PWDfWDIz1AUkwuYfUsPk7o2-grqiRQpnMiz58Et59Cxnp1y0Mkgl-1ivyaBocoxpXycs6Ng1-UvdmKy712kenbZOh_wlht9KeKTBzpsTP6PmCGOF9acMaR6LppHpDV7tmTgvVaBei2K0b5E6c6r8Qv2zjU6XMfGITsIg7azMsQOpoGZUv7i0xmnu5_HiIOBpxuLfcG5ew2W6JBAinuyK61Urx8iJNUbIQ2f" 
+              <img
+                alt="Abstract texture"
+                className="w-full h-full object-cover grayscale"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF2GkqMRbHMcsrWB86TiBHdZDOsJOqKoQajmyOZSdf3PWDfWDIz1AUkwuYfUsPk7o2-grqiRQpnMiz58Et59Cxnp1y0Mkgl-1ivyaBocoxpXycs6Ng1-UvdmKy712kenbZOh_wlht9KeKTBzpsTP6PmCGOF9acMaR6LppHpDV7tmTgvVaBei2K0b5E6c6r8Qv2zjU6XMfGITsIg7azMsQOpoGZUv7i0xmnu5_HiIOBpxuLfcG5ew2W6JBAinuyK61Urx8iJNUbIQ2f"
               />
             </div>
             <div className="relative z-10 text-left">
@@ -102,10 +139,10 @@ const Dashboard: React.FC = () => {
           {/* Wide Card */}
           <div className="md:col-span-8 group cursor-pointer bg-surface-container-low p-6 rounded-sm hover:bg-surface-container-high transition-all duration-300 flex flex-col md:flex-row gap-8 items-center text-left">
             <div className="w-full md:w-1/3 aspect-video bg-surface-container overflow-hidden rounded-sm">
-              <img 
-                alt="Cybernetic pattern" 
-                className="w-full h-full object-cover opacity-50 grayscale group-hover:scale-110 transition-transform duration-500" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuvQti0pk0FjwWCF3v9QkFCivgpcbfoKUzQYMtU-WaSx1Oz8KqgmYkQgBUNXRD6CsXk21z_yZ29iZGjLu3F2PnhMEIgQGMwCliab1kkGfJB-mGvqxQP8E1qobTB-d7cJq6yHKm8wbJy17s3vsP7NbWsELQfycHDv3_h9xFvKaiRTZozSvfHpbF7i7F4qKZI9o6TPYe5EI_xbo3yW1ZEeIGOzDua71O2RNvIR7WBDMTj5-ou69DQ1boPn9evfmuC2xNgpZwpQ1J5yjN" 
+              <img
+                alt="Cybernetic pattern"
+                className="w-full h-full object-cover opacity-50 grayscale group-hover:scale-110 transition-transform duration-500"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuvQti0pk0FjwWCF3v9QkFCivgpcbfoKUzQYMtU-WaSx1Oz8KqgmYkQgBUNXRD6CsXk21z_yZ29iZGjLu3F2PnhMEIgQGMwCliab1kkGfJB-mGvqxQP8E1qobTB-d7cJq6yHKm8wbJy17s3vsP7NbWsELQfycHDv3_h9xFvKaiRTZozSvfHpbF7i7F4qKZI9o6TPYe5EI_xbo3yW1ZEeIGOzDua71O2RNvIR7WBDMTj5-ou69DQ1boPn9evfmuC2xNgpZwpQ1J5yjN"
               />
             </div>
             <div className="flex-1">
@@ -156,8 +193,8 @@ const Dashboard: React.FC = () => {
       </main>
 
       {/* Floating Action Button */}
-      <button className="fixed bottom-24 right-8 md:bottom-12 md:right-12 z-[60] group flex items-center gap-3 bg-primary text-on-primary pl-4 pr-6 py-4 rounded-sm shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border-none cursor-pointer">
-        <span className="material-symbols-outlined text-2xl"><AddIcon/></span>
+      <button onClick={() => navigate("/add")} className="fixed bottom-24 right-8 md:bottom-12 md:right-12 z-60 group flex items-center gap-3 bg-primary text-on-primary pl-4 pr-6 py-4 rounded-sm shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border-none cursor-pointer">
+        <span className="material-symbols-outlined text-2xl"><AddIcon /></span>
         <span className="font-headline font-bold text-xs uppercase tracking-widest">Add Content</span>
       </button>
 
