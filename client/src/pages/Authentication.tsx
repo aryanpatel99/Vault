@@ -9,6 +9,7 @@ const Authentication: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [persist, setPersist] = useState(true)
   const navigate = useNavigate();
 
   const handleAuth = async (e:React.SyntheticEvent)=>{
@@ -31,13 +32,16 @@ const Authentication: React.FC = () => {
       const data = await response.json()
       if (response.ok) {
         if (isLogin) {
-          localStorage.setItem("token", data.token)
+          if (persist) {
+            localStorage.setItem("token", data.token)
+          } else {
+            sessionStorage.setItem("token", data.token)
+          }
           navigate('/dashboard')
         } else {
           setIsLogin(true)
           setUsername('')
           setPassword('')
-          // alert("Protocol initialized. Please configure identity.")
           toast.success("Protocol initialized. Please configure identity.")
         }
       } else {
@@ -150,6 +154,8 @@ const Authentication: React.FC = () => {
                   <input 
                     className="w-3 h-3 bg-surface-container border-outline-variant rounded-sm text-primary focus:ring-offset-background focus:ring-primary transition-all" 
                     type="checkbox" 
+                    checked={persist}
+                    onChange={(e) => setPersist(e.target.checked)}
                   />
                   <span>Persist session</span>
                 </label>

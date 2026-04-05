@@ -8,11 +8,13 @@ import AddContentModal from './components/AddContentModal';
 import SearchDiscovery from './pages/SearchDiscovery';
 
 function App() {
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/auth" />} />
-        <Route path="/auth" element={<Authentication />} />
+        <Route path="/" element={<Navigate to={token ? "/dashboard" : "/auth"} />} />
+        <Route path="/auth" element={token ? <Navigate to="/dashboard" /> : <Authentication />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/public" element={<PublicSharedVault />} />
         <Route path="/excalidraw" element={<ExcalidrawDocument />} />

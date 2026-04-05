@@ -10,6 +10,7 @@ import  { z } from "zod";
 import { authMiddleware } from "./middleware.js";
 import cors from "cors";
 import crypto from "crypto";
+import ogs from "open-graph-scraper";
 
 const app = express();
 
@@ -81,12 +82,38 @@ app.post("/api/v1/content", authMiddleware,async(req, res) => {
     try {
         const {link, title, tags} = req.body;
         const userId = (req as any).user.userId;
-        console.log(userId)
+
+        let metaTitle = title;
+        let metaDescription = "";
+        let metaThumbnail = "";
+
+        try {
+            const options = { 
+                url: link,
+                fetchOptions: {
+                    headers: {
+                      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
+                    }
+                },
+                timeout: 5000
+            };
+            const { result } = await ogs(options) as any;
+            console.log("Scraped metadata for", link, ":", result);
+            if (result && result.success) {
+                metaTitle = result.ogTitle || result.twitterTitle || result.articleTitle || result.requestUrl || title;
+                metaDescription = result.ogDescription || result.twitterDescription || "";
+                metaThumbnail = result.ogImage?.[0]?.url || result.ogImage?.url || result.twitterImage?.[0]?.url || result.twitterImage?.url || "";
+            }
+        } catch (e) {
+            console.log("Metadata scraping failed for:", link);
+        }
 
         const content = await ContentModel.create({
             userId,
             link,
-            title,
+            title: metaTitle,
+            description: metaDescription,
+            thumbnail: metaThumbnail,
             tags
         })
 
