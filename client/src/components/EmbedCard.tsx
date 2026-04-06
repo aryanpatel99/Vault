@@ -1,4 +1,4 @@
-import { DeleteIcon, LinkIcon } from '@/lib/icons';
+import { DeleteIcon, GlobeIcon, LinkIcon } from '@/lib/icons';
 import React, { useEffect, useRef } from 'react';
 
 interface EmbedCardProps {
@@ -123,7 +123,7 @@ const EmbedCard: React.FC<EmbedCardProps> = ({ contentId, title, link, tags, des
             className="text-outline hover:text-white transition-colors duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            <LinkIcon />
+            <GlobeIcon />
           </a>
         </div>
       </div>
@@ -199,7 +199,7 @@ const EmbedCard: React.FC<EmbedCardProps> = ({ contentId, title, link, tags, des
           <span className="text-[10px] text-outline font-headline font-bold uppercase tracking-widest truncate">
             {new URL(link).hostname.replace('www.', '')}
           </span>
-          <div className="px-2 py-0.5 bg-white/5 rounded-full">
+          <div className="px-2 py-0.5 bg-white/5 rounded-full flex items-center justify-center">
             <span className="text-[8px] text-outline font-black uppercase tracking-widest">
               {youtubeId ? 'Video' : tweetId ? 'Social' : 'Bookmark'}
             </span>
